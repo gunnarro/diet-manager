@@ -41,12 +41,15 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>1.5.10.RELEASE</version>
+				<version>2.0.3.RELEASE</version>
+				<configuration>
+    				<includeSystemScope>true</includeSystemScope>
+  				</configuration>
 			</plugin>
 			<plugin>
 				 <groupId>io.fabric8</groupId>
 			     <artifactId>fabric8-maven-plugin</artifactId>
-    			 <version>3.5.39</version>
+    			 <version>3.5.40</version>
 				<!-- <configuration> <resources> <labels> <all> <property> <name>app</name> 
 					<value>dietmanager</value> </property> <property> <name>hystrix.enabled</name> 
 					<value>false</value> </property> </all> </labels> </resources> <enricher> 
@@ -63,7 +66,7 @@
 			<artifactId>user-manager</artifactId>
 			<version>${version.usermanager}</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/user-manager-${version.usermanager}.jar</systemPath>
+			<systemPath>${basedir}/src/main/resources/lib/user-manager-${version.usermanager}.jar</systemPath>
 			<exclusions>
 				<exclusion>
 					<groupId>*</groupId>
