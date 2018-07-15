@@ -19,10 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import com.gunnarro.dietmanager.domain.log.ImageResource;
-import com.gunnarro.dietmanager.mvc.controller.FileUploadController;
 import com.gunnarro.dietmanager.service.FileUploadService;
 import com.gunnarro.dietmanager.service.exception.UploadFileException;
 import com.gunnarro.dietmanager.service.exception.UploadFileNotFoundException;
@@ -48,7 +46,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     public void init() {
         try {
             Files.createDirectories(rootLocation);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new UploadFileException("Could not initialize storage", e);
         }
     }
@@ -67,7 +65,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             String filename = StringUtils.cleanPath(file.getOriginalFilename());
             LOG.debug("Store file: {}", userDir.resolve(filename).toString());
             Files.copy(file.getInputStream(), userDir.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOG.error(null, e);
             throw new UploadFileException("Failed to store file!", e);
         }
@@ -81,7 +79,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         }
         try {
            return Files.walk(userDir, 1).filter(path -> !path.equals(userDir)).map(path -> new ImageResource(this.rootLocation.relativize(path).toString())).collect(Collectors.toList());
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new UploadFileException("Failed to read stored files", e);
         }
     }
@@ -91,7 +89,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         try {
             Path userImageDir = getUserImageDir(id);
             return Files.walk(userImageDir, 1).filter(path -> !path.equals(userImageDir)).map(path -> userImageDir.relativize(path));
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOG.error("root path: {}", this.rootLocation.toAbsolutePath());
             throw new UploadFileException("Failed to read stored files", e);
         }

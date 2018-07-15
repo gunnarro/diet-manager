@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.ServletContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,71 +30,68 @@ import com.gunnarro.dietmanager.service.FileUploadService;
  *
  */
 @Controller
-public class FileUploadController {
+public class FileUploadController extends BaseController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FileUploadController.class);
-	
-    @Autowired
-    public FileUploadController(FileUploadService fileUploadService) {
-        this.fileUploadService = fileUploadService;
-    }
 
-    private final FileUploadService fileUploadService;
+	@Autowired
+	public FileUploadController(FileUploadService fileUploadService) {
+		this.fileUploadService = fileUploadService;
+	}
 
-    /**
-     * 
-     * @return
-     * @throws IOException
-     */
-    @GetMapping("/upload/{id}")
-    @ResponseBody
-    public ModelAndView listUploadedFiles(@PathVariable String id) throws IOException {
-        List<String> files = fileUploadService.loadAll(id)
-                .map(path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class, "getImageAsResource", id, path.getFileName().toString()).build().toString())
-                .collect(Collectors.toList());
-        ModelAndView modelView = new ModelAndView("upload/upload-file");
-        modelView.getModel().put("id", id);
-        modelView.getModel().put("files", files);
-        return modelView;
-    }
+	private final FileUploadService fileUploadService;
 
-    /**
-     * 
-     * @param id
-     * @param filename
-     * @return
-     */
-    @GetMapping(value = "/upload/files/{id}/{filename}")
-    @ResponseBody
-    public ResponseEntity<Resource> getImageAsResource(@PathVariable String id, @PathVariable String filename) {
-        Resource resource = fileUploadService.loadAsResource(id, filename);
-        HttpHeaders headers = new HttpHeaders();
-        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
-    }
-    
-    
-    /**
-     * 
-     * @param file
-     * @param redirectAttributes
-     * @return
-     */
-    @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("description") String description, @RequestParam("id") String id,
-            RedirectAttributes redirectAttributes) {
-    	if (file == null) {
-    		// return error
-    		return "redirect:/upload/" + id;
-    	}
-    	
-        fileUploadService.store(file, id, description);
-        redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
-        return "redirect:/upload/" + id;
-    }
+	/**
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	@GetMapping("/upload/{id}")
+	@ResponseBody
+	public ModelAndView listUploadedFiles(@PathVariable String id) throws IOException {
+		List<String> files = fileUploadService
+				.loadAll(id).map(path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
+						"getImageAsResource", id, path.getFileName().toString()).build().toString())
+				.collect(Collectors.toList());
+		ModelAndView modelView = new ModelAndView("upload/upload-file");
+		modelView.getModel().put("id", id);
+		modelView.getModel().put("files", files);
+		return modelView;
+	}
 
-    // @ExceptionHandler(UploadFileNotFoundException.class)
-    // public ResponseEntity<?>
-    // handleStorageFileNotFound(UploadFileNotFoundException exc) {
-    // return ResponseEntity.notFound().build();
-    // }
+	/**
+	 * 
+	 * @param id
+	 * @param filename
+	 * @return
+	 */
+	@GetMapping(value = "/upload/files/{id}/{filename}")
+	@ResponseBody
+	public ResponseEntity<Resource> getImageAsResource(@PathVariable String id, @PathVariable String filename) {
+		Resource resource = fileUploadService.loadAsResource(id, filename);
+		HttpHeaders headers = new HttpHeaders();
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * @param file
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@PostMapping("/upload")
+	public String handleFileUpload(@RequestParam("file") MultipartFile file,
+			@RequestParam("description") String description, @RequestParam("id") String id,
+			RedirectAttributes redirectAttributes) {
+		if (file == null) {
+			// return error
+			return "redirect:/upload/" + id;
+		}
+
+		fileUploadService.store(file, id, description);
+		redirectAttributes.addFlashAttribute("message",
+				"You successfully uploaded " + file.getOriginalFilename() + "!");
+		return "redirect:/upload/" + id;
+	}
+
 }

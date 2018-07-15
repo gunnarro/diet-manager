@@ -53,11 +53,11 @@
 			<thymeleaf-layout-dialect.version>2.2.2</thymeleaf-layout-dialect.version> -->
 
 		<!-- Web dependencies -->
-		<webjars-bootstrap.version>3.3.7</webjars-bootstrap.version>
+		<webjars-bootstrap.version>4.1.1</webjars-bootstrap.version>
 		<!-- <webjars-bootstrap.version>4.0.0-alpha.3</webjars-bootstrap.version> -->
 		<webjars-jquery-ui.version>1.12.1</webjars-jquery-ui.version>
-		<webjars-jquery.version>3.1.1</webjars-jquery.version>
-
+		<webjars-jquery.version>3.3.1-1</webjars-jquery.version>
+		<webjars-propper.version>1.14.1</webjars-propper.version>
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
@@ -74,9 +74,9 @@
 
 
 	<scm>
-		<url>https://github.com/gunnarro/microapp</url>
-		<connection>scm:git:git://github.com/gunnarro/microapp.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/gunnarro/microapp.git</developerConnection>
+		<url>https://github.com/gunnarro/diet-manager</url>
+		<connection>scm:git:git://github.com/gunnarro/diet-manager.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/gunnarro/diet-manager.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -144,6 +144,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-devtools</artifactId>
+    		<optional>true</optional>
+    		<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -232,6 +238,11 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>${webjars-jquery.version}</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.webjars</groupId>
+    		<artifactId>popper.js</artifactId>
+    		<version>${webjars-propper.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javassist</groupId>
