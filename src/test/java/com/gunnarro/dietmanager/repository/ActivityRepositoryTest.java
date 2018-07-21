@@ -1,13 +1,8 @@
 package com.gunnarro.dietmanager.repository;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
-import java.util.Calendar;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,9 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gunnarro.dietmanager.config.DefaultTestConfig;
 import com.gunnarro.dietmanager.config.TestMariDBDataSourceConfiguration;
 import com.gunnarro.dietmanager.config.TestRepositoryConfiguration;
-import com.gunnarro.dietmanager.domain.log.LogComment;
-import com.gunnarro.dietmanager.domain.log.LogEntry;
-import com.gunnarro.dietmanager.utility.Utility;
 
 @ContextConfiguration(classes = { TestMariDBDataSourceConfiguration.class, TestRepositoryConfiguration.class })
 @Transactional

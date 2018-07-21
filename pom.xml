@@ -1,6 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+	<!-- mvn clean install -DskipTests -->
+	<!-- mysql -u USERNAME -pPASSWORD -h HOSTNAMEORIP DATABASENAME  -->
+
 	<!-- Check by sonarcube (ref. https://github.com/SonarSource/sonar-examples/tree/master/projects/languages/java/code-coverage/ut/ut-maven-jacoco) -->
 	<!-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -->
 	<!-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Pcoverage-per-test -->

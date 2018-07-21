@@ -309,3 +309,9 @@ table.table tfoot tr { background-color:#f5f5f5 !important;}
 .span-checked-mark {
 	content: "\2713";
 }
+
+.breadcrumb {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-top: 4px;
+ }

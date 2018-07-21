@@ -26,11 +26,9 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import com.gunnarro.dietmanager.domain.log.ImageResource;
 import com.gunnarro.dietmanager.domain.statistic.MealStatistic;
-import com.gunnarro.dietmanager.mvc.controller.FileUploadController;
 import com.gunnarro.dietmanager.service.DietManagerService;
 
 public class UtilityTest {

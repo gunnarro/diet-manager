@@ -20,35 +20,17 @@
 								<span th:text="#{login.msg.loggedout}"></span>
 							</div>
 						</div>
-						<div class="input-group mb-3">
-						  <div class="input-group-prepend">
-						    <span class="input-group-text" id="basic-addon1">@</span>
-						  </div>
-						  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-						</div>
-						
-						<div class="input-group mb-3">
-						  <div class="input-group-prepend">
-						    <span class="oi oi-person"></span>
-						  </div>
-						  <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
-						</div>
-						
-						<div class="input-group mb-3">
-							<span class="input-group-addon"><i class="oi oi-person"></i></span> 
+						<div class="input-group input-group-margin">
 							<label for="inputUserName" class="sr-only" th:text="#{lbl.username}"></label> 
 							<input id="inputUserName" type="text" name="username" class="form-control form-control-lg" th:placeholder="#{lbl.username}" required="required" autofocus="autofocus">
 						</div>
 						<div class="input-group input-group-margin">
-							<span class="input-group-addon"><i class="oi oi-lock-locked"></i></span> 
 							<label for="inputPassword" class="sr-only" th:text="#{lbl.password}"></label> 
 							<input id="inputPassword" type="password" name="password" class="form-control form-control-lg" th:placeholder="#{lbl.password}" required="required">
 						</div>
-						<div class="row">
-							<div class="col-6 col-md-6 col-lg-6">
-								<input type="submit" class="btn btn-lg btn-primary btn-block" th:value="#{lbl.signin}">
-							</div>
-							<div class="col-6 col-md-6 col-lg-6"></div>
+						<div class="input-group input-group-margin">
+							<input type="submit" class="btn btn-lg btn-primary btn-block" th:value="#{lbl.signin}">
+						<div class="col-6 col-md-6 col-lg-6"></div>
 						</div>
 					</fieldset>
 				</form>
