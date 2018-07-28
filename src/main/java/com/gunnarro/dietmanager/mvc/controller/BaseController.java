@@ -12,6 +12,7 @@ import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gunnarro.dietmanager.service.ActivityService;
@@ -69,6 +70,11 @@ public class BaseController {
 	@ExceptionHandler(UploadFileException.class)
 	public ModelAndView handleUploadFileException(HttpServletRequest request, Exception ex) {
 		return handleException(request.getRequestURI(), request.getRequestURI(), ex, ex.getMessage());
+	}
+
+	@ExceptionHandler(MultipartException.class)
+	public ModelAndView handleMultipartException(HttpServletRequest request, Exception ex) {
+		return handleException(request.getRequestURI(), request.getRequestURI(), ex, "Upload failed!");
 	}
 
 	@ExceptionHandler(CommunicationsException.class)

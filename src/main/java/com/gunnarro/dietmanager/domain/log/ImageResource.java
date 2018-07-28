@@ -1,12 +1,14 @@
 package com.gunnarro.dietmanager.domain.log;
 
 public class ImageResource {
+
     private Integer id;
     private String name;
     private String description;
     private String path;
     private String type;
-
+    private long createdTimeMs;
+    
     public ImageResource(String path) {
         this.path = path;
     }

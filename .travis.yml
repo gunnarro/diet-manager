@@ -5,7 +5,9 @@ services:
 - docker
 env:
 global:
-
+ - DOCKER_USER = "gunnarro" # docker user
+ - DOCKER_PASS = "ABcd2o1o" # docker pass
+ - COMMIT=${TRAVIS_COMMIT::8}
 
 after_success:
 - docker login -u $DOCKER_USER -p $DOCKER_PASS

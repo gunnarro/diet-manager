@@ -72,17 +72,37 @@
 			
 			<p></p>
 			
-			<!-- view images -->
-			<div th:each="resource : ${log.resources}" class="row">
-				<div class="col-lg-4">
-					<div class="thumbnail">
-						<img th:src="@{/upload/files/} + ${resource.path}" style="width: 100%; height: 100%">
-						<div class="caption">
-							<p th:text="${resource.path}"></p>
-						</div>
-					</div>
-				</div>
-			</div>
+	    <div class="btn-group" role="group" aria-label="Basic example">
+	  		<button id="list" type="button" class="btn btn-outline-secondary"><i class="oi oi-list"></i> List</button>
+	  		<button id="grid" type="button" class="btn btn-outline-secondary"><i class="oi oi-grid-three-up"></i> Grid</button>
+		</div>
+    
+    <p></p>
+    
+    </div>	
+		<div id="products" class="row list-group">	
+			<div th:each="resource : ${log.resources}" class="item col-xs-4 col-lg-4">
+	            <div class="thumbnail">
+	            	<img class="group list-group-image" th:src="@{/upload/files/} + ${resource.path}" alt="xxx" width="400" height="250">
+	                <div class="caption">
+	                    <h4 class="group inner list-group-item-heading">
+	                        Image Description</h4>
+	                    <p class="group inner list-group-item-text" th:text="${resource.description}"></p>
+	                    <div class="row">
+	                        <div class="col-xs-12 col-md-6">
+	                            <p class="lead">
+	                                Action</p>
+	                        </div>
+	                        <div class="col-xs-12 col-md-6">
+	                            <a th:href="@{/upload/files/} + ${resource.id} + '/' + ${resource.name}" class="btn btn-outline-secondary btn-sm"><span th:text="#{btn.delete}"></span></a>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+		</div>
+			
+			
 			<!-- end panel body -->
 			<div class="card-footer clearfix">
 				<div class="float-right">
@@ -95,6 +115,14 @@
 	</div>
 	<!-- end container -->
 	<div th:replace="fragments/footer :: footer"></div>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+	    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
+	    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+	});
+	</script>
+	
 </body>
 
 </html>

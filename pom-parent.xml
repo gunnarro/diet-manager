@@ -53,7 +53,7 @@
 			<thymeleaf-layout-dialect.version>2.2.2</thymeleaf-layout-dialect.version> -->
 
 		<!-- Web dependencies -->
-		<webjars-bootstrap.version>4.1.1</webjars-bootstrap.version>
+		<webjars-bootstrap.version>4.1.2</webjars-bootstrap.version>
 		<!-- <webjars-bootstrap.version>4.0.0-alpha.3</webjars-bootstrap.version> -->
 		<webjars-jquery-ui.version>1.12.1</webjars-jquery-ui.version>
 		<webjars-jquery.version>3.3.1-1</webjars-jquery.version>
