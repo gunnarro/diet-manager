@@ -404,36 +404,8 @@
 
 	<profiles>
 		<profile>
-			<id>openshift</id>
-			<!-- <build> <directory>/tmp/src/target</directory> </build> -->
-			<properties>
-				<db.driver>com.mysql.jdbc.Driver</db.driver>
-				<db.url>jdbc:mysql://172.30.169.124:3306/dietmanager</db.url>
-				<db.username>web</db.username>
-				<db.password>wEbt0t3</db.password>
-			</properties>
+			<id>dev</id>
 		</profile>
-
-		<profile>
-			<id>DBSystemTest</id>
-			<properties>
-				<db.driver>com.mysql.jdbc.Driver</db.driver>
-				<db.url>jdbc:mysql://localhost:3306/sportsteam</db.url>
-				<db.username>root</db.username>
-				<db.password>mysql</db.password>
-			</properties>
-		</profile>
-
-		<profile>
-			<id>DBProd</id>
-			<properties>
-				<db.driver>com.mysql.jdbc.Driver</db.driver>
-				<db.url>jdbc:mysql://127.9.127.2:3306/sportsteam</db.url>
-				<db.username>web</db.username>
-				<db.password>wEbt0t3</db.password>
-			</properties>
-		</profile>
-
 	</profiles>
 
 	<repositories>
