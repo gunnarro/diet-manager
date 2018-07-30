@@ -52,7 +52,7 @@ public class UtilityTest {
         
         Stream<Path> images = Files.walk(userDir, 1).filter(path -> !path.equals(userDir)).map(path -> rootDir.relativize(path));
         List<ImageResource> collect = images
-        .map(path -> new ImageResource(path.toString()))
+        .map(path -> new ImageResource("23","img.png",path.toString()))
         .collect(Collectors.toList());
         
         System.out.println(collect);

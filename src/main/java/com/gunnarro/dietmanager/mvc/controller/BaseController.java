@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gunnarro.dietmanager.service.ActivityService;
 import com.gunnarro.dietmanager.service.DietManagerService;
+import com.gunnarro.dietmanager.service.FileUploadService;
 import com.gunnarro.dietmanager.service.LogEventService;
 import com.gunnarro.dietmanager.service.exception.ApplicationException;
 import com.gunnarro.dietmanager.service.exception.UploadFileException;
@@ -43,6 +44,9 @@ public class BaseController {
 
 	@Autowired
 	protected ActivityService activityService;
+
+	@Autowired
+	protected FileUploadService fileUploadService;
 
 	public AuthenticationFacade getAuthenticationFacade() {
 		return authenticationFacade;

@@ -28,29 +28,26 @@
 						<a th:href="@{/diet/log/event/delete/} + ${log.id}" class="btn btn-secondary btn-sm disabled"><i class="oi oi-trash"></i></a>
 					</span>
 				</div>
-				<h3 class="card-title">
+				<h5 class="card-title">
 					<span th:text="${#dates.format(log.createdDate, &apos;EEEE dd.MM.yy&apos;) + &apos; &apos; + #dates.format(log.createdDate, &apos;HH:mm&apos;)}" class="badge badge-dark"></span> 
 					<span th:if="${log.level == &apos;INFO&apos;}" class="badge badge-info" th:text="${log.level}"></span> 
 					<span th:if="${log.level == &apos;ACTIVITY&apos;}" class="badge badge-success" th:text="${log.level}"></span> 
 					<span th:if="${log.level == &apos;REPORT&apos;}" class="badge badge-warning" th:text="${log.level}"></span> 
 					<span th:if="${log.level == &apos;CONFLICT&apos;}" class="badge badge-danger" th:text="${log.level}"></span>
+					<span th:if="${log.level == &apos;MEETING&apos;}" class="badge badge-primary" th:text="${log.level}"></span>
 					<span th:text="${log.title}"></span>
-				</h3>
+				</h5>
 			</div>
 			<!-- end panel header -->
 			<div class="card-body">
 				<ul class="list-group">
 					<li class="list-group-item list-group-item-success" style="margin: 0px 0px 10px 0px;">
-						<h6>
-							<small class="text-muted" th:inline="text">[[#{lbl.created_date}]] [[${#dates.format(log.createdDate, &apos;EEEE dd.MM.yyyy HH:mm:ss&apos;)}]] [[#{lbl.by}]] [[${log.createdByUser}]]</small>
-						</h6>
+						<small class="text-muted float-right" th:inline="text">[[${#dates.format(log.createdDate, &apos;EEEE dd.MM.yyyy HH:mm:ss&apos;)}]] [[#{lbl.by}]] [[${log.createdByUser}]]</small>
 						<p class="text-left" th:text="${log.contentHtml}"></p>
 					</li>
 					<th:block th:if="${!log.logComments.isEmpty()}" th:each="comment : ${log.logComments}">
 						<li class="list-group-item list-group-item-info" style="margin: 0px 0px 10px 25px;">
-							<h6>
-								<small class="text-muted" th:inline="text">[[#{lbl.created_date}]] [[${#dates.format(comment.createdDate, &apos;EEEE dd.MM.yyyy HH:mm:ss&apos;)}]] [[#{lbl.by}]] [[${comment.createdByUser}]]</small>
-							</h6>
+							<small class="text-muted float-right" th:inline="text">[[${#dates.format(comment.createdDate, &apos;EEEE dd.MM.yyyy HH:mm:ss&apos;)}]] [[#{lbl.by}]] [[${comment.createdByUser}]]</small>
 							<p class="text-left" th:text="${comment.content}"></p>
 						</li>
 					</th:block>
@@ -72,21 +69,22 @@
 			
 			<p></p>
 			
-	    <div class="btn-group" role="group" aria-label="Basic example">
-	  		<button id="list" type="button" class="btn btn-outline-secondary"><i class="oi oi-list"></i> List</button>
-	  		<button id="grid" type="button" class="btn btn-outline-secondary"><i class="oi oi-grid-three-up"></i> Grid</button>
+	    <div class="btn-group" role="group">
+	  		<button id="list" type="button" class="btn btn-outline-secondary btn-sm"><i class="oi oi-list"></i> List</button>
+	  		<button id="grid" type="button" class="btn btn-outline-secondary btn-sm"><i class="oi oi-grid-three-up"></i> Grid</button>
 		</div>
     
     <p></p>
     
-    </div>	
 		<div id="products" class="row list-group">	
 			<div th:each="resource : ${log.resources}" class="item col-xs-4 col-lg-4">
 	            <div class="thumbnail">
 	            	<img class="group list-group-image" th:src="@{/upload/files/} + ${resource.path}" alt="xxx" width="400" height="250">
 	                <div class="caption">
-	                    <h4 class="group inner list-group-item-heading">
-	                        Image Description</h4>
+	                    <h5 class="group inner list-group-item-heading">Image Description</h5>
+	                    <p class="group inner list-group-item-text" th:text="${resource.path}"></p>
+	                    <p class="group inner list-group-item-text" th:text="${resource.id}"></p>
+	                    <p class="group inner list-group-item-text" th:text="${resource.name}"></p>
 	                    <p class="group inner list-group-item-text" th:text="${resource.description}"></p>
 	                    <div class="row">
 	                        <div class="col-xs-12 col-md-6">
@@ -94,7 +92,7 @@
 	                                Action</p>
 	                        </div>
 	                        <div class="col-xs-12 col-md-6">
-	                            <a th:href="@{/upload/files/} + ${resource.id} + '/' + ${resource.name}" class="btn btn-outline-secondary btn-sm"><span th:text="#{btn.delete}"></span></a>
+	                        	<a th:href="@{/diet/log/event/img/delete/} + ${resource.id} + '/' + ${resource.name}" class="btn btn-outline-secondary btn-sm" th:text="#{btn.delete}"></a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -102,9 +100,8 @@
 	        </div>
 		</div>
 			
-			
-			<!-- end panel body -->
-			<div class="card-footer clearfix">
+		<!-- end panel body -->
+		<div class="card-footer clearfix">
 				<div class="float-right">
 					<a th:href="@{/diet/log/events}" class="btn btn-primary btn-sm"><span th:text="#{btn.back}"></span></a>
 				</div>

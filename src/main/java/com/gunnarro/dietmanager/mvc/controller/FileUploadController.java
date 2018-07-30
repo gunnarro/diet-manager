@@ -12,10 +12,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,8 +74,14 @@ public class FileUploadController extends BaseController {
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
-	@PutMapping("/upload/files/{id}/{filename}")
-	public String deleteImage(String id, String fileName) {
+	/**
+	 * 
+	 * @param id
+	 * @param fileName
+	 * @return
+	 */
+	@DeleteMapping("/upload/files/delete")
+	public String deleteImage(@RequestParam("id") String id, @RequestParam("filename") String fileName) {
 		fileUploadService.deleteImage(id, fileName);
 		return "redirect:/upload/" + id;
 	}

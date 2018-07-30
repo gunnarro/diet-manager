@@ -18,8 +18,8 @@
 			<div class="card-header clearfix">
 				<div th:if="${log.id} != null" class="float-right">
 					<div class="float-right">
-						<a th:href="@{/upload/} + ${log.id}" class="btn btn-primary btn-xs" th:text="#{btn.upload}"></a> 
-						<a th:href="@{/diet/log/event/delete/} + ${log.id}" class="btn btn-danger btn-xs" th:text="#{btn.delete}"></a>
+						<a th:href="@{/upload/} + ${log.id}" class="btn btn-primary btn-sm" th:text="#{btn.upload}"></a> 
+						<a th:href="@{/diet/log/event/delete/} + ${log.id}" class="btn btn-danger btn-sm" th:text="#{btn.delete}"></a>
 					</div>
 				</div>
 				<h3 th:if="${log.id} == null" class="card-title" th:text="#{editeventlog.title}"></h3>
@@ -58,6 +58,7 @@
 				        	<option th:value="INFO" th:text="Informasjon"></option>
 							<option th:value="CONFLICT" th:text="Konflikt"></option>
 							<option th:value="ACTIVITY" th:text="Aktivitet"></option>
+							<option th:value="MEETING" th:text="Møte"></option>
 							<option th:value="REPORT" th:text="Rapport"></option>
 							<option th:value="GAMING" th:text="Spilling"></option>
 				      </select>
@@ -74,9 +75,9 @@
 					</div>
 					
 					<div class="form-group float-right">
-						<button type="submit" class="btn btn-primary" th:if="${log.id} == null" th:text="#{btn.new}"></button>
-						<button type="submit" class="btn btn-primary" th:if="${log.id} != null" th:text="#{btn.update}"></button>
-						<a th:href="@{/diet/log/events}" class="btn btn-outline-secondary"><span th:text="#{btn.cancel}"></span></a>
+						<button type="submit" class="btn btn-primary btn-sm" th:if="${log.id} == null" th:text="#{btn.new}"></button>
+						<button type="submit" class="btn btn-primary btn-sm" th:if="${log.id} != null" th:text="#{btn.update}"></button>
+						<a th:href="@{/diet/log/events}" class="btn btn-outline-secondary btn-sm"><span th:text="#{btn.cancel}"></span></a>
 					</div>
 				</form>
 			</div>

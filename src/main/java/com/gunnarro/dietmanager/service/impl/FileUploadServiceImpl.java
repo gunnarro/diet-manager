@@ -80,8 +80,9 @@ public class FileUploadServiceImpl implements FileUploadService {
 			return null;
 		}
 		try {
-			return Files.walk(userDir, 1).filter(path -> !path.equals(userDir))
-					.map(path -> new ImageResource(this.rootLocation.relativize(path).toString()))
+			return Files
+					.walk(userDir, 1).filter(path -> !path.equals(userDir)).map(path -> new ImageResource(id,
+							path.toFile().getName(), this.rootLocation.relativize(path).toString()))
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new UploadFileException("Failed to read stored files", e);
@@ -91,9 +92,12 @@ public class FileUploadServiceImpl implements FileUploadService {
 	@Override
 	public void deleteImage(String id, String fileName) {
 		try {
-			String path = getUserImageDir(id).toString() + "" + fileName;
-			FileSystemUtils.deleteRecursively(new File(path));
-			LOG.debug("deleted: {}", path);
+			String path = String.format("%s/%s", getUserImageDir(id).toString(), fileName);
+			if (new File(path).delete()) {
+				LOG.debug("deleted: {}", path);
+			} else {
+				LOG.error("error deleting {}", path);
+			}
 		} catch (IOException e) {
 			LOG.error("", e);
 		}
