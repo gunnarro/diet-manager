@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head></head>
-
 <body>
 	<th:block th:fragment="log-card-list">
 			<div th:each="log, iter : ${page.content}" th:if="${(log.level == logType or logType == '*') and iter.count < limit}" >
 				<div id="panel-child" class="card mb-2">
 					<div class="card-header">
 						<h5 class="card-title" th:with="logWeekDay=${#dates.dayOfWeekNameShort(log.createdDate)}, logDate=${#dates.format(log.createdDate, &apos;EEEE dd.MM.yy&apos;)}, logTime=${#dates.format(log.createdDate, &apos;HH:mm&apos;)}">
-							<span th:switch="${#dates.dayOfWeekName(log.createdDate)}"> <span th:case="&apos;Mandag&apos;" class="badge badge-dark"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Tirsdag&apos;" class="badge badge-primary"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Onsdag&apos;" class="badge badge-success"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Torsdag&apos;" class="badge badge-info"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Fredag&apos;" class="badge badge-warning"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;L&#xF8;rdag&apos;" class="badge badge-white"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;S&#xF8;ndag&apos;" class="badge badge-purple"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Monday&apos;" class="badge badge-dark"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Tuesday&apos;" class="badge badge-primary"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Wednesday&apos;" class="badge badge-success"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Thursday&apos;" class="badge badge-info"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Friday&apos;" class="badge badge-warning"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Saturday&apos;" class="badge badge-white"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Sunday&apos;" class="badge badge-purple"
-									th:text="${logDate} + &apos; &apos; + ${logTime}"></span>
-							</span> 
-								<span th:switch="${log.level}"> <span th:case="&apos;INFO&apos;" th:text="${log.level}" class="badge badge-info"></span> 
+							<th:block th:switch="${#dates.dayOfWeekName(log.createdDate)}"> 
+								<span th:case="&apos;Mandag&apos;" class="badge badge-dark" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Tirsdag&apos;" class="badge badge-primary" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Onsdag&apos;" class="badge badge-success" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Torsdag&apos;" class="badge badge-info" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Fredag&apos;" class="badge badge-warning" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;L&#xF8;rdag&apos;" class="badge badge-white" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;S&#xF8;ndag&apos;" class="badge badge-purple" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Monday&apos;" class="badge badge-dark" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Tuesday&apos;" class="badge badge-primary" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Wednesday&apos;" class="badge badge-success" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Thursday&apos;" class="badge badge-info" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Friday&apos;" class="badge badge-warning" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Saturday&apos;" class="badge badge-white" th:text="${logDate} + &apos; &apos; + ${logTime}"></span> 
+								<span th:case="&apos;Sunday&apos;" class="badge badge-purple" th:text="${logDate} + &apos; &apos; + ${logTime}"></span>
+								<span th:case="*" class="badge badge-info" th:text="${logDate} + &apos; &apos; + ${logTime}"></span>
+							</th:block> 
+							<th:block th:switch="${log.level}"> 
+								<span th:case="&apos;INFO&apos;" th:text="${log.level}" class="badge badge-info"></span> 
 								<span th:case="&apos;ACTIVITY&apos;" th:text="${log.level}" class="badge badge-success"></span> 
 								<span th:case="&apos;REPORT&apos;" th:text="${log.level}" class="badge badge-warning"></span> 
 								<span th:case="&apos;CONFLICT&apos;" th:text="${log.level}" class="badge badge-danger"></span> 
 								<span th:case="&apos;GAMING&apos;" th:text="${log.level}" class="badge badge-dark"></span>
 								<span th:case="&apos;MEETING&apos;" th:text="${log.level}" class="badge badge-primary"></span>
-							</span> 
+								<span th:case="*" th:text="${log.level}" class="badge badge-info"></span>
+							</th:block> 
 							<span> 
 								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" th:href="@{&apos;#collapse_&apos; + ${iter.index}}" th:text="${log.title}"></a>
 							</span>
