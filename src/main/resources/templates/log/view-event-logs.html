@@ -37,10 +37,15 @@
 		</div>
 		<!-- End page header -->
 		<!-- Tab navigation -->
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs"> 
 			<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#latestlogs">Latest logs</a></li>
     		<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#mettings">Meetings</a></li>
     		<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#alllogs">All logs</a></li>
+    		<!--
+    		<li class="nav-item"><a class="nav-link active" data-toggle="tab_ajax" href="" data-target="latestlogs">Latest logs</a></li>
+    		<li class="nav-item"><a class="nav-link" data-toggle="tab_ajax" href="" data-target="mettings">Meetings</a></li>
+    		<li class="nav-item"><a class="nav-link" data-toggle="tab_ajax" href="" data-target="alllogs">All logs</a></li>
+    		-->
   		</ul>
         
 		<p></p>
@@ -48,17 +53,17 @@
 		<div class="tab-content">
         	<div id="latestlogs" class="tab-pane active">	
 				<div class="list panel-group ml-2 mr-2" id="accordion">
-					<div th:replace="fragments/log-card-list :: log-card-list(logType='INFO')"></div>
+					<div th:replace="fragments/log-card-list :: log-card-list(logType='*', limit=25)"></div>
 				</div>
 			</div>		
 	        <div id="mettings" class="tab-pane fade">		
 				<div class="list panel-group ml-2 mr-2" id="accordion">
-					<div th:replace="fragments/log-card-list :: log-card-list(logType='MEETING')"></div>
+					<div th:replace="fragments/log-card-list :: log-card-list(logType='MEETING', limit=25)"></div>
 				</div>
 			</div>
 	        <div id="alllogs" class="tab-pane fade">		
 				<div class="list panel-group ml-2 mr-2" id="accordion">
-					<div th:replace="fragments/log-card-list :: log-card-list(logType='*')"></div>
+					<div th:replace="fragments/log-card-list :: log-card-list(logType='*', limit=100)"></div>
 				</div>
 			</div>
 		</div> <!-- end tab content -->
@@ -95,6 +100,9 @@
 	<!-- end container -->
 	<div th:replace="fragments/footer :: footer"></div>
 	<!-- Put java script at end of document -->
+	<script type="text/javascript">
+	
+	</script>
 </body>
 
 </html>

@@ -5,11 +5,11 @@
 
 <body>
 	<th:block th:fragment="log-card-list">
-			<div th:each="log, iter : ${page.content}" th:if="${log.level == logType or logType == '*'}" >
+			<div th:each="log, iter : ${page.content}" th:if="${(log.level == logType or logType == '*') and iter.count < limit}" >
 				<div id="panel-child" class="card mb-2">
 					<div class="card-header">
 						<h5 class="card-title" th:with="logWeekDay=${#dates.dayOfWeekNameShort(log.createdDate)}, logDate=${#dates.format(log.createdDate, &apos;EEEE dd.MM.yy&apos;)}, logTime=${#dates.format(log.createdDate, &apos;HH:mm&apos;)}">
-								<span th:switch="${#dates.dayOfWeekName(log.createdDate)}"> <span th:case="&apos;Mandag&apos;" class="badge badge-dark"
+							<span th:switch="${#dates.dayOfWeekName(log.createdDate)}"> <span th:case="&apos;Mandag&apos;" class="badge badge-dark"
 									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Tirsdag&apos;" class="badge badge-primary"
 									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Onsdag&apos;" class="badge badge-success"
 									th:text="${logDate} + &apos; &apos; + ${logTime}"></span> <span th:case="&apos;Torsdag&apos;" class="badge badge-info"

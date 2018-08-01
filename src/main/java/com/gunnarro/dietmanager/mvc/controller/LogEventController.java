@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gunnarro.dietmanager.domain.log.LogComment;
 import com.gunnarro.dietmanager.domain.log.LogEntry;
@@ -56,7 +58,7 @@ public class LogEventController extends BaseController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, false));
 	}
 
-	@GetMapping(value = URI_LOG_EVENTS)
+	@GetMapping(URI_LOG_EVENTS)
 	@ResponseBody
 	public ModelAndView getLogEvents(@RequestParam(value = "page", required = false) Integer pageNumber,
 			@RequestParam(value = "size", required = false) Integer pageSize) {
@@ -76,7 +78,7 @@ public class LogEventController extends BaseController {
 		return modelView;
 	}
 
-	@GetMapping(value = "/diet/log/event/view/{logId}")
+	@GetMapping("/diet/log/event/view/{logId}")
 	public ModelAndView logEventView(@PathVariable("logId") int logId) {
 		LocalUser loggedInUser = authenticationFacade.getLoggedInUser();
 		if (loggedInUser == null) {
@@ -91,7 +93,7 @@ public class LogEventController extends BaseController {
 		return modelView;
 	}
 
-	@GetMapping(value = "/diet/log/events/txt")
+	@GetMapping("/diet/log/events/txt")
 	@ResponseBody
 	public ModelAndView viewLogEventsAsPlainText() {
 		LocalUser loggedInUser = authenticationFacade.getLoggedInUser();
@@ -108,7 +110,7 @@ public class LogEventController extends BaseController {
 	// New and update log event
 	// ---------------------------------------------
 
-	@GetMapping(value = "/diet/log/event/new")
+	@GetMapping("/diet/log/event/new")
 	public String initNewLogEventForm(Map<String, Object> model) {
 		LocalUser loggedInUser = authenticationFacade.getLoggedInUser();
 		if (loggedInUser == null) {
@@ -127,7 +129,7 @@ public class LogEventController extends BaseController {
 	 * User POST for new
 	 * 
 	 */
-	@PostMapping(value = "/diet/log/event/new")
+	@PostMapping("/diet/log/event/new")
 	public String processNewLogEventForm(@Valid @ModelAttribute("log") LogEntry log, BindingResult result,
 			SessionStatus status) {
 		if (LOG.isDebugEnabled()) {
@@ -147,7 +149,7 @@ public class LogEventController extends BaseController {
 		}
 	}
 
-	@GetMapping(value = "/diet/log/event/edit/{logEventId}")
+	@GetMapping("/diet/log/event/edit/{logEventId}")
 	public String initUpdateLogEventForm(@PathVariable("logEventId") int logEventId, Model model) {
 		LocalUser loggedInUser = authenticationFacade.getLoggedInUser();
 		LogEntry log = logEventService.getLogEvent(loggedInUser.getId(), logEventId);
@@ -166,7 +168,7 @@ public class LogEventController extends BaseController {
 	 * Use PUT for updates
 	 * 
 	 */
-	@PostMapping(value = "/diet/log/event/edit")
+	@PostMapping("/diet/log/event/edit")
 	public String processUpdateLogEventForm(@Valid @ModelAttribute("log") LogEntry log, BindingResult result,
 			SessionStatus status) {
 		if (LOG.isDebugEnabled()) {
@@ -188,7 +190,7 @@ public class LogEventController extends BaseController {
 	 * Use PUT for updates
 	 * 
 	 */
-	@PostMapping(value = "/diet/log/event/edit/{logEventId}")
+	@PostMapping("/diet/log/event/edit/{logEventId}")
 	public String processUpdateLogEventIdForm(@Valid @ModelAttribute("log") LogEntry log, BindingResult result,
 			SessionStatus status) {
 		if (LOG.isDebugEnabled()) {
@@ -209,7 +211,7 @@ public class LogEventController extends BaseController {
 	/**
 	 * 
 	 */
-	@GetMapping(value = "/diet/log/event/delete/{logEntryId}")
+	@GetMapping("/diet/log/event/delete/{logEntryId}")
 	public String deletelogEvent(@PathVariable("logEntryId") int logEntryId) {
 		LocalUser loggedInUser = authenticationFacade.getLoggedInUser();
 		LogEntry log = logEventService.getLogEvent(loggedInUser.getId(), logEntryId);
@@ -220,10 +222,34 @@ public class LogEventController extends BaseController {
 		return String.format("%s:%s", REDIRECT, URI_LOG_EVENTS);
 	}
 
+	// ---------------------------------------------
+	// Add/delete image to log event
+	// ---------------------------------------------
+	
+	/**
+	 * 
+	 * @param file
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@PostMapping("/diet/log/event/img/upload/")
+	public String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("description") String description, @RequestParam("id") String id, RedirectAttributes redirectAttributes) {
+		if (file == null) {
+			// return error
+			return "redirect:/upload/" + id;
+		}
+		fileUploadService.store(file, id, description);
+		LOG.debug("Successfully uploaded: {}/{}", id, file.getName());
+		// Add parameters to be viewed on the redirect page
+		redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
+		return "redirect:/upload/" + id;
+	}
+
+	
 	/**
 	 * 
 	 */
-	@GetMapping(value = "/diet/log/event/img/delete/{logEntryId}/{filename}")
+	@GetMapping("/diet/log/event/img/delete/{logEntryId}/{filename}")
 	public String deletelogEventImg(@PathVariable("logEntryId") int logEntryId,
 			@PathVariable("filename") String filename) {
 		fileUploadService.deleteImage(Integer.toString(logEntryId), filename);

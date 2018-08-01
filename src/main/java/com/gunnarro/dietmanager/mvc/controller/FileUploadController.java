@@ -49,7 +49,7 @@ public class FileUploadController extends BaseController {
 	 */
 	@GetMapping("/upload/{id}")
 	@ResponseBody
-	public ModelAndView listUploadedFiles(@PathVariable String id) throws IOException {
+	public ModelAndView uploadedFileForm(@PathVariable String id, @RequestParam("redirectUri") String redirectUri) throws IOException {
 		List<String> files = fileUploadService
 				.loadAll(id).map(path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
 						"getImageAsResource", id, path.getFileName().toString()).build().toString())
@@ -57,9 +57,34 @@ public class FileUploadController extends BaseController {
 		ModelAndView modelView = new ModelAndView("upload/upload-file");
 		modelView.getModel().put("id", id);
 		modelView.getModel().put("files", files);
+		modelView.getModel().put("redirectUri", redirectUri);
 		return modelView;
 	}
 
+	
+	/**
+	 * 
+	 * @param file
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@PostMapping("/upload")
+	public String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("description") String description, @RequestParam("id") String id, @RequestParam("redirectUri") String redirectUri, RedirectAttributes redirectAttributes) {
+		if (file == null) {
+			// return error
+			return "redirect:/upload/" + id;
+		}
+		fileUploadService.store(file, id, description);
+		LOG.debug("Successfully uploaded: {}/{}", id, file.getName());
+		redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
+		if (redirectUri != null && !redirectUri.isEmpty()) {
+			return String.format("redirect:%s", redirectUri);
+		} else {
+			return String.format("redirect:/upload/%s", id);
+		}
+	}
+
+	
 	/**
 	 * 
 	 * @param id
@@ -83,28 +108,6 @@ public class FileUploadController extends BaseController {
 	@DeleteMapping("/upload/files/delete")
 	public String deleteImage(@RequestParam("id") String id, @RequestParam("filename") String fileName) {
 		fileUploadService.deleteImage(id, fileName);
-		return "redirect:/upload/" + id;
-	}
-
-	/**
-	 * 
-	 * @param file
-	 * @param redirectAttributes
-	 * @return
-	 */
-	@PostMapping("/upload")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file,
-			@RequestParam("description") String description, @RequestParam("id") String id,
-			RedirectAttributes redirectAttributes) {
-		if (file == null) {
-			// return error
-			return "redirect:/upload/" + id;
-		}
-
-		fileUploadService.store(file, id, description);
-		LOG.debug("Successfully uploaded: {}/{}", id, file.getName());
-		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		return "redirect:/upload/" + id;
 	}
 

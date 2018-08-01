@@ -18,14 +18,14 @@
 			<div class="card-header clearfix">
 				<div th:if="${log.id} != null" class="float-right">
 					<span th:if="${#authentication.name == log.createdByUser}"> 
-						<a th:href="@{/upload/} + ${log.id}" class="oi oi-data-transfer-upload"></a> 
-						<a th:href="@{/diet/log/event/edit/} + ${log.id}" class="oi oi-pencil"></a>
-						<a th:href="@{/diet/log/event/delete/} + ${log.id}" class="oi oi-trash"></a>
+						<a th:href="@{/upload/__${log.id}__(redirectUri='/diet/log/event/view/' + ${logId})}" class="btn btn-outline-secondary btn-sm"><i class="oi oi-data-transfer-upload"></i></a> 
+						<a th:href="@{/diet/log/event/edit/__${log.id}__}"  class="btn btn-outline-secondary btn-sm"><i class="oi oi-pencil"></i></a>
+						<a th:href="@{/diet/log/event/delete/__${log.id}__}"  class="btn btn-outline-secondary btn-sm"><i class="oi oi-trash"></i></a>
 					</span> 
 					<span th:if="${#authentication.name != log.createdByUser}"> 
-						<a th:href="@{/upload/} + ${log.id}" class="oi oi-data-transfer-upload"></a> 
-						<a th:href="@{/diet/log/event/edit/} + ${log.id}" class="btn btn-secondary btn-sm disabled"><i class="oi oi-pencil"></i></a> 
-						<a th:href="@{/diet/log/event/delete/} + ${log.id}" class="btn btn-secondary btn-sm disabled"><i class="oi oi-trash"></i></a>
+						<a th:href="@{/upload/__${log.id}__(redirectUri='/diet/log/event/view/' + ${logId})}" class="oi oi-data-transfer-upload"></a> 
+						<a th:href="@{/diet/log/event/edit/__${log.id}__}" class="btn btn-secondary btn-sm disabled"><i class="oi oi-pencil"></i></a> 
+						<a th:href="@{/diet/log/event/delete/__${log.id}__}" class="btn btn-secondary btn-sm disabled"><i class="oi oi-trash"></i></a>
 					</span>
 				</div>
 				<h5 class="card-title">
@@ -79,7 +79,7 @@
 		<div id="products" class="row list-group">	
 			<div th:each="resource : ${log.resources}" class="item col-xs-4 col-lg-4">
 	            <div class="thumbnail">
-	            	<img class="group list-group-image" th:src="@{/upload/files/} + ${resource.path}" alt="xxx" width="400" height="250">
+	            	<img class="group list-group-image" th:src="@{/upload/files/} + ${resource.path}" alt="image-400x250" width="400" height="250">
 	                <div class="caption">
 	                    <h5 class="group inner list-group-item-heading">Image Description</h5>
 	                    <p class="group inner list-group-item-text" th:text="${resource.path}"></p>
@@ -92,7 +92,7 @@
 	                                Action</p>
 	                        </div>
 	                        <div class="col-xs-12 col-md-6">
-	                        	<a th:href="@{/diet/log/event/img/delete/} + ${resource.id} + '/' + ${resource.name}" class="btn btn-outline-secondary btn-sm" th:text="#{btn.delete}"></a>
+	                        	<a th:href="@{/diet/log/event/img/delete/__${resource.id}__/__${resource.name}__}" class="btn btn-outline-secondary btn-sm" th:text="#{btn.delete}"></a>
 	                        </div>
 	                    </div>
 	                </div>
