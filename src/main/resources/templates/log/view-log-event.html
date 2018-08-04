@@ -67,38 +67,7 @@
 					</div>
 			</form>
 			
-			<p></p>
-			
-	    <div class="btn-group" role="group">
-	  		<button id="list" type="button" class="btn btn-outline-secondary btn-sm"><i class="oi oi-list"></i> List</button>
-	  		<button id="grid" type="button" class="btn btn-outline-secondary btn-sm"><i class="oi oi-grid-three-up"></i> Grid</button>
-		</div>
-    
-    <p></p>
-    
-		<div id="products" class="row list-group">	
-			<div th:each="resource : ${log.resources}" class="item col-xs-4 col-lg-4">
-	            <div class="thumbnail">
-	            	<img class="group list-group-image" th:src="@{/upload/files/} + ${resource.path}" alt="image-400x250" width="400" height="250">
-	                <div class="caption">
-	                    <h5 class="group inner list-group-item-heading">Image Description</h5>
-	                    <p class="group inner list-group-item-text" th:text="${resource.path}"></p>
-	                    <p class="group inner list-group-item-text" th:text="${resource.id}"></p>
-	                    <p class="group inner list-group-item-text" th:text="${resource.name}"></p>
-	                    <p class="group inner list-group-item-text" th:text="${resource.description}"></p>
-	                    <div class="row">
-	                        <div class="col-xs-12 col-md-6">
-	                            <p class="lead">
-	                                Action</p>
-	                        </div>
-	                        <div class="col-xs-12 col-md-6">
-	                        	<a th:href="@{/diet/log/event/img/delete/__${resource.id}__/__${resource.name}__}" class="btn btn-outline-secondary btn-sm" th:text="#{btn.delete}"></a>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-		</div>
+			<div th:replace="fragments/cards-gallery :: cards-gallery"></div>
 			
 		<!-- end panel body -->
 		<div class="card-footer clearfix">
@@ -112,14 +81,5 @@
 	</div>
 	<!-- end container -->
 	<div th:replace="fragments/footer :: footer"></div>
-	
-	<script type="text/javascript">
-	$(document).ready(function() {
-	    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
-	    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
-	});
-	</script>
-	
 </body>
-
 </html>

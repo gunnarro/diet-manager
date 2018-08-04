@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gunnarro.dietmanager.domain.log.ImageResource;
 import com.gunnarro.dietmanager.domain.log.LogComment;
 import com.gunnarro.dietmanager.domain.log.LogEntry;
 import com.gunnarro.dietmanager.service.exception.ApplicationException;
@@ -246,6 +247,28 @@ public class LogEventController extends BaseController {
 	}
 
 	
+	/**
+	 * Use PUT for updates
+	 * 
+	 */
+	@PostMapping("/diet/log/event/img/delete")
+	public String processDeleteLogImageForm(@Valid @ModelAttribute("resource") ImageResource resource, BindingResult result,
+			SessionStatus status) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(resource.toString());
+		}
+		if (result.hasErrors()) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(result.toString());
+			}
+			return String.format("%s:%s/%s", REDIRECT, URI_LOG_EVENT_VIEW, resource.getId());
+		} else {
+			fileUploadService.deleteImage(resource.getId(), resource.getName());
+			logEventService.deleteLogEventImage(Integer.parseInt(resource.getId()), resource.getName());
+			return String.format("%s:%s/%s", REDIRECT, URI_LOG_EVENT_VIEW, resource.getId());
+		}
+	}
+
 	/**
 	 * 
 	 */
