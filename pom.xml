@@ -28,7 +28,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gunnarro.dietmanager</groupId>
 	<artifactId>dietmanager</artifactId>
-	<version>1.8.0</version>
+	<version>1.8.1</version>
 	<name>dietmanager</name>
 	<packaging>jar</packaging>
 
