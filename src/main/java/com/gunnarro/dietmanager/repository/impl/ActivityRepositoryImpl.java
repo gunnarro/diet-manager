@@ -19,15 +19,14 @@ import com.gunnarro.dietmanager.repository.table.activity.ActivityLogTable;
 import com.gunnarro.dietmanager.service.exception.ApplicationException;
 
 @Repository
-public class ActivityRepositoryImpl implements ActivityRepository {
+public class ActivityRepositoryImpl extends BaseJdbcRepository implements ActivityRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(ActivityRepositoryImpl.class);
 
-    private final JdbcTemplate jdbcTemplate;
     
     @Autowired
     public ActivityRepositoryImpl(JdbcTemplate jdbcTemplate) {
-    	this.jdbcTemplate = jdbcTemplate;
+    	super(jdbcTemplate);
     }
 
     /**
@@ -40,7 +39,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
         }
         try {
             KeyHolder keyHolder = new GeneratedKeyHolder();
-            jdbcTemplate.update(ActivityLogTable.createInsertPreparedStatement(activityLog), keyHolder);
+            getJdbcTemplate().update(ActivityLogTable.createInsertPreparedStatement(activityLog), keyHolder);
             return keyHolder.getKey().intValue();
         } catch (Exception e) {
             LOG.error(null, e);
@@ -53,7 +52,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
      */
     @Override
     public int deleteActivityLog(Integer userId, Integer id) {
-        int rows = jdbcTemplate.update("DELETE FROM activity_log WHERE id = ? AND fk_user_id = ?", new Object[] { id, userId });
+        int rows = getJdbcTemplate().update("DELETE FROM activity_log WHERE id = ? AND fk_user_id = ?", new Object[] { id, userId });
         if (LOG.isDebugEnabled()) {
             LOG.debug("deleted activity log with id=" + id + ", deleted rows = {}", rows);
         }
@@ -72,7 +71,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
             query.append(" WHERE l.id = ?");
             // query.append(" AND l.fk_user_id = ?");
             query.append(" AND l.fk_user_id = u.id");
-            ActivityLog log = jdbcTemplate.queryForObject(query.toString(), new Object[] { activityLogId }, DietManagerRowMapper.mapToActivityLogRM());
+            ActivityLog log = getJdbcTemplate().queryForObject(query.toString(), new Object[] { activityLogId }, DietManagerRowMapper.mapToActivityLogRM());
             return log;
         } catch (org.springframework.dao.EmptyResultDataAccessException erae) {
             if (LOG.isDebugEnabled()) {
@@ -93,7 +92,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
         query.append(" WHERE l.fk_user_id = ?");
         query.append(" AND l.fk_user_id = u.id");
         query.append(" ORDER BY l.last_modified_date_time DESC");
-        return jdbcTemplate.query(query.toString(), new Object[] { userId }, DietManagerRowMapper.mapToActivityLogRM());
+        return getJdbcTemplate().query(query.toString(), new Object[] { userId }, DietManagerRowMapper.mapToActivityLogRM());
     }
 
     /**
@@ -104,7 +103,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
         if (LOG.isDebugEnabled()) {
             LOG.debug(activityLog.toString());
         }
-        return jdbcTemplate.update(ActivityLogTable.createUpdateQuery(), ActivityLogTable.createUpdateParam(activityLog));
+        return getJdbcTemplate().update(ActivityLogTable.createUpdateQuery(), ActivityLogTable.createUpdateParam(activityLog));
     }
 
     /**
@@ -119,7 +118,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
 //        sqlQuery.append(" AND l.fk_user_id = u.id");
         sqlQuery.append("SELECT * FROM users WHERE username = ?");
         try {
-            String name = jdbcTemplate.queryForObject(sqlQuery.toString(), new Object[] { logEventId }, String.class);
+            String name = getJdbcTemplate().queryForObject(sqlQuery.toString(), new Object[] { logEventId }, String.class);
             return name.equals(username);
         } catch (org.springframework.dao.EmptyResultDataAccessException erae) {
             if (LOG.isDebugEnabled()) {

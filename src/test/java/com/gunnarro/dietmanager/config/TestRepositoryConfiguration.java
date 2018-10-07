@@ -33,13 +33,13 @@ public class TestRepositoryConfiguration {
 
     @Bean
     public LogEventRepository logEventRepository() {
-        return new LogEventRepositoryImpl(dataSource);
+        return new LogEventRepositoryImpl(new JdbcTemplate(dataSource));
     }
 
-//    @Bean
-//    public ActivityRepository activityRepository(JdbcTemplate jdbcTemplate) {
-//        return new ActivityRepositoryImpl(jdbcTemplate);
-//    }
+    @Bean
+    public ActivityRepository activityRepository() {
+        return new ActivityRepositoryImpl(new JdbcTemplate(dataSource));
+    }
 
     @Bean
     public UserAccountRepository userAccountRepository() {

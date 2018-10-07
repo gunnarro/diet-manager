@@ -1,17 +1,14 @@
 package com.gunnarro.dietmanager.config;
 
-import java.util.Properties;
-
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -41,24 +38,35 @@ public class DataSourceConfiguration {
 
     @Value("${jdbc.driverClassName}")
 	private String jdbcDriverClassName;
+
+    /**
+	 * The gcp datasource is auto configured and autowired as jdbc template
+	 */
+    @Autowired
+//    @Qualifier("dietManagerJdbcTemplate")
+	private JdbcTemplate jdbcTemplate;
+	
+//    @Autowired
+//    private DataSource gcpDataSource;
     
  // bean is singleton as default
- 	@Bean(name = "dietManagerDataSource")
- 	@Primary
- 	public DataSource dietManagerDataSource() {
- 		DriverManagerDataSource ds = new DriverManagerDataSource();
- 		ds.setDriverClassName(jdbcDriverClassName);
- 		ds.setUrl(jdbcUrl);
- 		ds.setUsername(jdbcUser);
- 		ds.setPassword(jdbcPwd);
- 		Properties p = new Properties();
- 		p.put("useSSL", "false");
- 		p.put("useUnicode", "true");
- 		p.put("passwordCharacterEncoding", "UTF-8");
- 		p.put("characterEncoding", "UTF-8");
- 		ds.setConnectionProperties(p);
- 		return ds;
- 	}
+// 	@Bean(name = "dietManagerDataSource")
+// 	@Primary
+// 	public DataSource dietManagerDataSource() {
+// 		DriverManagerDataSource ds = new DriverManagerDataSource();
+// 		ds.setDriverClassName(jdbcDriverClassName);
+// 		ds.setUrl(jdbcUrl);
+// 		ds.setUsername(jdbcUser);
+// 		ds.setPassword(jdbcPwd);
+// 		Properties p = new Properties();
+// 		p.put("useSSL", "false");
+// 		p.put("useUnicode", "true");
+// 		p.put("passwordCharacterEncoding", "UTF-8");
+// 		p.put("characterEncoding", "UTF-8");
+// 		ds.setConnectionProperties(p);
+// 		return ds;
+// 		return gcpDataSource;
+// 	}
     
     
     // bean is singleton as default
@@ -98,11 +106,11 @@ public class DataSourceConfiguration {
      * 
      * @return
      */
-    @Bean(name = "logEventDataSource")
-    // @Primary
-    public DataSource logEventDataSource() {
-        return dietManagerDataSource();
-    }
+//    @Bean(name = "logEventDataSource")
+//    // @Primary
+//    public DataSource logEventDataSource() {
+//        return dietManagerDataSource();
+//    }
 
 //    @Bean(name = "activityDataSource")
 //    public DataSource activityDataSource() {
@@ -118,13 +126,14 @@ public class DataSourceConfiguration {
 //        return ds;
 //    }
 
-    @Bean
-    public DataSourceTransactionManager transactionManager() {
-        return new DataSourceTransactionManager(dietManagerDataSource());
-    }
+//    @Bean
+//    public DataSourceTransactionManager transactionManager() {
+//        return new DataSourceTransactionManager(dietManagerDataSource());
+//    }
 
     @Bean
     public UserAccountRepository userAccountRepository() {
-        return new UserAccountRepositoryImpl(new JdbcTemplate(dietManagerDataSource()));
+//        return new UserAccountRepositoryImpl(new JdbcTemplate(dietManagerDataSource()));
+    	return new UserAccountRepositoryImpl(jdbcTemplate);
     }
 }

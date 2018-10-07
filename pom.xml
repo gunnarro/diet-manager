@@ -121,6 +121,12 @@
 			<artifactId>joda-time</artifactId>
 			<version>${version.jodatime}</version>
 		</dependency>
+		<dependency>
+      		<groupId>com.google.apis</groupId>
+      		<artifactId>google-api-services-oauth2</artifactId>
+      		<version>v1-rev145-1.25.0</version>
+      		<scope>runtime</scope>
+    	</dependency>
 		<!-- markdown to html converter -->
 		<dependency>
 			<groupId>com.vladsch.flexmark</groupId>

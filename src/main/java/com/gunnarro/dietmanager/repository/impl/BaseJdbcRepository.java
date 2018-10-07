@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -16,6 +17,9 @@ public abstract class BaseJdbcRepository {
 
 	public static final int PAGE_SIZE = 25;
 
+	/**
+	 * The gcp datasource is auto configured and autowired as jdbc template
+	 */
 	private JdbcTemplate jdbcTemplate;
 
 	public BaseJdbcRepository() {
@@ -30,14 +34,24 @@ public abstract class BaseJdbcRepository {
 		}
 	}
 
+//	/**
+//	 * Creates a new JdbcRepositorySupport for the given JdbcTemplate.
+//	 * 
+//	 * @param jdbcTemplate
+//	 *            the JDBC template to create the JDBC Repository Support for.
+//	 */
+//	public BaseJdbcRepository(DataSource dataSource) {
+////		this.jdbcTemplate = new JdbcTemplate(dataSource);
+//	}
+//	
 	/**
 	 * Creates a new JdbcRepositorySupport for the given JdbcTemplate.
 	 * 
 	 * @param jdbcTemplate
 	 *            the JDBC template to create the JDBC Repository Support for.
 	 */
-	public BaseJdbcRepository(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public BaseJdbcRepository(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	/**

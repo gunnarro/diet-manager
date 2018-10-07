@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -30,18 +31,23 @@ public class LogEventRepositoryImpl extends BaseJdbcRepository implements LogEve
 
     private static final Logger LOG = LoggerFactory.getLogger(LogEventRepositoryImpl.class);
 
-    @Autowired
-    public LogEventRepositoryImpl(@Qualifier("logEventDataSource") DataSource dataSource) {
-        super(dataSource);
-    }
+//    @Autowired
+//    public LogEventRepositoryImpl(@Qualifier("logEventDataSource") DataSource dataSource) {
+//        super(dataSource);
+//    }
 
     /**
      * Needed by spring framework
      */
-    public LogEventRepositoryImpl() {
-        super(null);
-    }
+//    public LogEventRepositoryImpl() {
+//        super(null);
+//    }
 
+    @Autowired
+    public LogEventRepositoryImpl(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate);
+    }
+    
     /**
      * {@inheritDoc}
      */
