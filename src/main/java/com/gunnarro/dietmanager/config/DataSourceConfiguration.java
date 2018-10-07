@@ -39,21 +39,43 @@ public class DataSourceConfiguration {
     @Value("${jdbc.pwd}")
     private String jdbcPwd;
 
+    @Value("${jdbc.driverClassName}")
+	private String jdbcDriverClassName;
+    
+ // bean is singleton as default
+ 	@Bean(name = "dietManagerDataSource")
+ 	@Primary
+ 	public DataSource dietManagerDataSource() {
+ 		DriverManagerDataSource ds = new DriverManagerDataSource();
+ 		ds.setDriverClassName(jdbcDriverClassName);
+ 		ds.setUrl(jdbcUrl);
+ 		ds.setUsername(jdbcUser);
+ 		ds.setPassword(jdbcPwd);
+ 		Properties p = new Properties();
+ 		p.put("useSSL", "false");
+ 		p.put("useUnicode", "true");
+ 		p.put("passwordCharacterEncoding", "UTF-8");
+ 		p.put("characterEncoding", "UTF-8");
+ 		ds.setConnectionProperties(p);
+ 		return ds;
+ 	}
+    
+    
     // bean is singleton as default
-    @Bean(name = "dietManagerDataSource")
-    @Primary
-    public DataSource dietManagerDataSource() {
-        DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl(jdbcUrl);
-        ds.setUsername(jdbcUser);
-        ds.setPassword(jdbcPwd);
-        Properties p = new Properties();
-        p.put("useSSL", "false");
-        ds.setConnectionProperties(p);
-        runUpdateDBScript(ds);
-        return ds;
-    }
+//    @Bean(name = "dietManagerDataSource")
+//    @Primary
+//    public DataSource dietManagerDataSource() {
+//        DriverManagerDataSource ds = new DriverManagerDataSource();
+//        ds.setDriverClassName("com.mysql.jdbc.Driver");
+//        ds.setUrl(jdbcUrl);
+//        ds.setUsername(jdbcUser);
+//        ds.setPassword(jdbcPwd);
+//        Properties p = new Properties();
+//        p.put("useSSL", "false");
+//        ds.setConnectionProperties(p);
+//        runUpdateDBScript(ds);
+//        return ds;
+//    }
 
     private void runUpdateDBScript(DataSource ds) {
         try {
@@ -82,10 +104,19 @@ public class DataSourceConfiguration {
         return dietManagerDataSource();
     }
 
-    @Bean(name = "activityDataSource")
-    public DataSource activityDataSource() {
-        return dietManagerDataSource();
-    }
+//    @Bean(name = "activityDataSource")
+//    public DataSource activityDataSource() {
+//    	DriverManagerDataSource ds = new DriverManagerDataSource();
+//        ds.setDriverClassName("com.mysql.jdbc.Driver");
+//        ds.setUrl("dbc:mysql://google/petclinic?cloudSqlInstance=INSTANCE_CONNECTION_NAME&socketFactory=com.google.cloud.sql.mysql.SocketFactory");
+//        ds.setUsername("root");
+//        ds.setPassword("ABcd2o1o");
+////        Properties p = new Properties();
+////        p.put("useSSL", "false");
+////        ds.setConnectionProperties(p);
+//        runUpdateDBScript(ds);
+//        return ds;
+//    }
 
     @Bean
     public DataSourceTransactionManager transactionManager() {

@@ -36,10 +36,10 @@ public class TestRepositoryConfiguration {
         return new LogEventRepositoryImpl(dataSource);
     }
 
-    @Bean
-    public ActivityRepository activityRepository() {
-        return new ActivityRepositoryImpl(dataSource);
-    }
+//    @Bean
+//    public ActivityRepository activityRepository(JdbcTemplate jdbcTemplate) {
+//        return new ActivityRepositoryImpl(jdbcTemplate);
+//    }
 
     @Bean
     public UserAccountRepository userAccountRepository() {
