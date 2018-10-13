@@ -4,9 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -34,16 +31,6 @@ public abstract class BaseJdbcRepository {
 		}
 	}
 
-//	/**
-//	 * Creates a new JdbcRepositorySupport for the given JdbcTemplate.
-//	 * 
-//	 * @param jdbcTemplate
-//	 *            the JDBC template to create the JDBC Repository Support for.
-//	 */
-//	public BaseJdbcRepository(DataSource dataSource) {
-////		this.jdbcTemplate = new JdbcTemplate(dataSource);
-//	}
-//	
 	/**
 	 * Creates a new JdbcRepositorySupport for the given JdbcTemplate.
 	 * 
