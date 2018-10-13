@@ -3,7 +3,6 @@ package com.gunnarro.dietmanager.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,17 +26,17 @@ import com.gunnarro.useraccount.repository.impl.UserAccountRepositoryImpl;
 @EnableTransactionManagement
 public class DataSourceConfiguration {
 
-    @Value("${jdbc.url}")
-    private String jdbcUrl;
-
-    @Value("${jdbc.user}")
-    private String jdbcUser;
-
-    @Value("${jdbc.pwd}")
-    private String jdbcPwd;
-
-    @Value("${jdbc.driverClassName}")
-	private String jdbcDriverClassName;
+//    @Value("${jdbc.url}")
+//    private String jdbcUrl;
+//
+//    @Value("${jdbc.user}")
+//    private String jdbcUser;
+//
+//    @Value("${jdbc.pwd}")
+//    private String jdbcPwd;
+//
+//    @Value("${jdbc.driverClassName}")
+//	private String jdbcDriverClassName;
 
     /**
 	 * The gcp datasource is auto configured and autowired as jdbc template
@@ -89,7 +88,6 @@ public class DataSourceConfiguration {
         try {
             DatabasePopulatorUtils.execute(createDatabasePopulator(), ds);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException("Error init datasource: " + e.getMessage());
         }
     }
